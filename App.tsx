@@ -8,7 +8,7 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { THEME } from '@theme/index';
 import { Loading } from '@components/Loading';
-import { Text } from 'react-native';
+import { Routes } from '@routes/index';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,8 +19,8 @@ export default function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      {fontsLoaded ? <Text> Bem vindo a aplicação </Text> : <Loading />}
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      {fontsLoaded ? <Routes /> : <Loading />}
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
     </ThemeProvider>
   );
 }
