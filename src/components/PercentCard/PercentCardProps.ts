@@ -7,4 +7,5 @@ export interface Props {
 export interface PercentCardProps {
   type: PercentCardTypeStyleProps;
   title: string;
+  onPress: () => void;
 }
