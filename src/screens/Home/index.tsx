@@ -19,12 +19,16 @@ export const Home = () => {
     navigate('statistics');
   };
 
+  const handleCreateDiet = () => {
+    navigate('createDiet');
+  };
+
   return (
     <Styled.Container>
       <Header />
       <PercentCard title={title} type={type ? 'PRIMARY' : 'SECONDARY'} onPress={handleStatistics} />
       <Styled.Text>Refeições</Styled.Text>
-      <ButtonIcon icon="add" title="Nova refeição" />
+      <ButtonIcon icon="add" title="Nova refeição" onPress={handleCreateDiet} />
       <SectionList
         sections={dietList}
         keyExtractor={(item) => item.name}
