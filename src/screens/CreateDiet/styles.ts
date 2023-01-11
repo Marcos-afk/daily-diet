@@ -10,14 +10,14 @@ export const Container = styled(SafeAreaView)`
 
 export const FormContainer = styled.View`
   flex: 1;
-  margin-top: -15px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
+  margin-top: -10px;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
 export const SubmitButton = styled.TouchableOpacity`
-  width: 90%;
+  width: 93%;
   align-items: center;
   justify-content: center;
   padding: 15px;
