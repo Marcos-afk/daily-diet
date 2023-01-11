@@ -1,7 +1,7 @@
 import { Form } from '@components/Form';
 import { HeaderIcon } from '@components/HeaderIcon';
 import { useNavigation } from '@react-navigation/native';
-import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import * as Styled from './styles';
 
 export const CreateDiet = () => {
@@ -12,19 +12,17 @@ export const CreateDiet = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Styled.Container>
-          <HeaderIcon type="PRIMARY" title="Nova refeição" onPress={handleGoBack} />
-          <Styled.FormContainer>
-            <Form />
-          </Styled.FormContainer>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Styled.Container>
+        <HeaderIcon type="PRIMARY" title="Nova refeição" onPress={handleGoBack} />
+        <Styled.FormContainer>
+          <Form />
+        </Styled.FormContainer>
 
-          <Styled.SubmitButton>
-            <Styled.Text>Cadastrar refeição</Styled.Text>
-          </Styled.SubmitButton>
-        </Styled.Container>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <Styled.SubmitButton>
+          <Styled.Text>Cadastrar refeição</Styled.Text>
+        </Styled.SubmitButton>
+      </Styled.Container>
+    </TouchableWithoutFeedback>
   );
 };
