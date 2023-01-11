@@ -5,23 +5,25 @@ export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   align-items: center;
+  justify-content: space-around;
 `;
 
 export const FormContainer = styled.View`
-  margin-top: -10px;
-  border-radius: 20px;
-  padding: 20px;
+  flex: 1;
+  margin-top: -15px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
 export const SubmitButton = styled.TouchableOpacity`
-  margin-top: 50px;
-  width: 93%;
+  width: 90%;
   align-items: center;
   justify-content: center;
   padding: 15px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_100};
   border-radius: 5px;
+  margin-bottom: 10px;
 `;
 
 export const Text = styled.Text`

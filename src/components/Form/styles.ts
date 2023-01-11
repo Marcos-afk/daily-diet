@@ -5,7 +5,7 @@ import { Props } from './FormProps';
 
 export const Container = styled.View`
   width: 100%;
-  margin-top: 10px;
+  padding: 18px;
 `;
 
 export const Label = styled.Text`
