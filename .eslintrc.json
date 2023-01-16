@@ -17,7 +17,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "indent": "off",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "prettier/prettier": "error",
     "no-empty-function": "off",
