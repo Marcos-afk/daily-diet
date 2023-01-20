@@ -5,7 +5,7 @@ import { PercentCard } from '@components/PercentCard';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { SectionList } from 'react-native';
-import { DietListProps } from './HomeProps';
+import { DietListProps, DataProps } from './HomeProps';
 import { mock } from './mock';
 import * as Styled from './styles';
 
@@ -23,6 +23,10 @@ export const Home = () => {
     navigate('createDiet');
   };
 
+  const handleShowDiet = (diet: DataProps) => {
+    navigate('showDiet', { diet });
+  };
+
   return (
     <Styled.Container>
       <Header />
@@ -33,7 +37,12 @@ export const Home = () => {
         sections={dietList}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
-          <MealCard name={item.name} hour={item.hour} type={item.type === 'on' ? 'PRIMARY' : 'SECONDARY'} />
+          <MealCard
+            name={item.name}
+            hour={item.hour}
+            type={item.type === 'on' ? 'PRIMARY' : 'SECONDARY'}
+            onPress={() => handleShowDiet(item)}
+          />
         )}
         renderSectionHeader={({ section: { title } }) => <Styled.SectionTitle>{title}</Styled.SectionTitle>}
         showsVerticalScrollIndicator={false}

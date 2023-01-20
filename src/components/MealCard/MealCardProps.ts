@@ -8,4 +8,5 @@ export interface MealCardProps {
   name: string;
   hour: string;
   type: MealCardTypeStyleProps;
+  onPress: () => void;
 }

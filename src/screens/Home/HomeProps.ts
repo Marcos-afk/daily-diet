@@ -1,6 +1,8 @@
-interface DataProps {
+export interface DataProps {
   hour: string;
+  data: string;
   name: string;
+  description: string;
   type: string;
 }
 

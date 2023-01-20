@@ -1,3 +1,5 @@
+import { DataProps } from '@screens/Home/HomeProps';
+
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
@@ -6,6 +8,9 @@ export declare global {
       createDiet: undefined;
       feedback: {
         style: string;
+      };
+      showDiet: {
+        diet: DataProps;
       };
     }
   }

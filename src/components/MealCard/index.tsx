@@ -1,9 +1,9 @@
 import * as Styled from './styles';
 import { MealCardProps } from './MealCardProps';
 
-export const MealCard = ({ name, hour, type }: MealCardProps) => {
+export const MealCard = ({ name, hour, type, onPress }: MealCardProps) => {
   return (
-    <Styled.Container>
+    <Styled.Container onPress={onPress}>
       <Styled.TextContainer>
         <Styled.Hour>{hour}</Styled.Hour>
         <Styled.Divider />
