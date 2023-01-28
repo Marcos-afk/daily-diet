@@ -1,17 +1,17 @@
 import * as Styled from './styles';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { HeaderIcon } from '@components/HeaderIcon';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Platform, View } from 'react-native';
-import { ButtonTypeStyleProps, DatePickerTypeModeProps } from './CreateDietProps';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { ButtonTypeStyleProps, DatePickerTypeModeProps, RouteParams } from './EditDietProps';
+import { HeaderIcon } from '@components/HeaderIcon';
 import { Label } from '@components/Label';
 import { Input } from '@components/Input';
 import { THEME } from '@theme/index';
 import { ContainerForTwoItems } from '@components/ContainerForTwoItems';
 import { InnerContainerForTwoItems } from '@components/InnerContainerForTwoItems';
 
-export const CreateDiet = () => {
+export const EditDiet = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
@@ -22,18 +22,6 @@ export const CreateDiet = () => {
   const [show, setShow] = useState(false);
 
   const [selectedButton, setSelectButton] = useState<ButtonTypeStyleProps>('PRIMARY');
-
-  const { goBack, navigate } = useNavigation();
-
-  const handleGoBack = () => {
-    goBack();
-  };
-
-  const handleFeedback = () => {
-    navigate('feedback', {
-      style: selectedButton,
-    });
-  };
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || datepicker;
@@ -49,10 +37,31 @@ export const CreateDiet = () => {
     setMode(currentMode === 'time' ? 'time' : 'date');
   };
 
+  const route = useRoute();
+  const { diet } = route.params as RouteParams;
+
+  const { goBack, navigate } = useNavigation();
+
+  const handleGoBack = () => {
+    goBack();
+  };
+
+  const handleHome = () => {
+    navigate('home');
+  };
+
+  useEffect(() => {
+    setName(diet.name);
+    setDescription(diet.description);
+    setDate(diet.date);
+    setTime(diet.hour);
+    setSelectButton(diet.type === 'on' ? 'PRIMARY' : 'SECONDARY');
+  }, [diet]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Styled.Container>
-        <HeaderIcon type="PRIMARY" title="Nova refeição" onPress={handleGoBack} />
+        <HeaderIcon type="PRIMARY" title="Editar refeição" onPress={handleGoBack} />
         <Styled.FormContainer>
           <Label title="Nome" />
           <Input
@@ -143,8 +152,8 @@ export const CreateDiet = () => {
           </ContainerForTwoItems>
         </Styled.FormContainer>
 
-        <Styled.SubmitButton onPress={handleFeedback}>
-          <Styled.Text>Cadastrar refeição</Styled.Text>
+        <Styled.SubmitButton onPress={handleHome}>
+          <Styled.Text>Salvar alterações</Styled.Text>
         </Styled.SubmitButton>
       </Styled.Container>
     </TouchableWithoutFeedback>

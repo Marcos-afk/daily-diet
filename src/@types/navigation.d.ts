@@ -12,6 +12,9 @@ export declare global {
       showDiet: {
         diet: DataProps;
       };
+      editDiet: {
+        diet: DataProps;
+      };
     }
   }
 }

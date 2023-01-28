@@ -1,6 +1,6 @@
 export interface DataProps {
   hour: string;
-  data: string;
+  date: string;
   name: string;
   description: string;
   type: string;

@@ -8,8 +8,10 @@ export interface RouteParams {
   };
 }
 
-export type BackgroundViewTypeStyleProps = 'PRIMARY' | 'SECONDARY';
+export type DatePickerTypeModeProps = 'time' | 'date';
+
+export type ButtonTypeStyleProps = 'PRIMARY' | 'SECONDARY';
 
 export interface Props {
-  type: BackgroundViewTypeStyleProps;
+  type: ButtonTypeStyleProps;
 }
