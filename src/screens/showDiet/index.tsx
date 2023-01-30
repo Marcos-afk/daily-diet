@@ -3,8 +3,12 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { HeaderIcon } from '@components/HeaderIcon';
 import { RouteParams } from './ShowDietProps';
 import { ButtonIcon } from '@components/ButtonIcon';
+import { useState } from 'react';
+import { Modal } from '@components/Modal';
 
 export const ShowDiet = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const route = useRoute();
   const { diet } = route.params as RouteParams;
 
@@ -18,6 +22,14 @@ export const ShowDiet = () => {
     navigate('editDiet', {
       diet,
     });
+  };
+
+  const handleRemoveDiet = (diet: string) => {
+    console.log(diet);
+  };
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
   };
 
   return (
@@ -36,8 +48,9 @@ export const ShowDiet = () => {
         </Styled.Tag>
       </Styled.TextsContainer>
       <Styled.SubmitButtonsContainer>
+        <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
         <ButtonIcon icon="edit" title="Editar refeição" onPress={handleGoToEditDiet} />
-        <ButtonIcon icon="delete" title="Excluir refeição" onPress={() => {}} type="SECONDARY" />
+        <ButtonIcon icon="delete" title="Excluir refeição" onPress={toggleModal} type="SECONDARY" />
       </Styled.SubmitButtonsContainer>
     </Styled.Container>
   );

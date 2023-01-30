@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Props } from './ShowDietProps';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
@@ -84,4 +86,30 @@ export const Icon = styled(FontAwesome).attrs<Props>(({ theme, type }) => ({
 export const SubmitButtonsContainer = styled.View`
   width: 93%;
   margin-bottom: 15px;
+`;
+
+export const DeleteIcon = styled(MaterialIcons).attrs(({ theme }) => ({
+  size: 24,
+  color: theme.COLORS.GRAY_100,
+}))``;
+
+export const DeleteButton = styled.Pressable`
+  width: 100%;
+  height: 45px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_100};
+`;
+
+export const TitleDeleteButton = styled.Text`
+${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.XSM}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    color: ${theme.COLORS.GRAY_200};
+  `}
+  margin-left: 5px;
 `;
