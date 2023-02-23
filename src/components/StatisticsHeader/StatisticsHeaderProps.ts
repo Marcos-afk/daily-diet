@@ -7,4 +7,5 @@ export interface Props {
 export interface StatisticsHeaderProps {
   type: StatisticsHeaderTypeStyleProps;
   onPress: () => void;
+  title: string;
 }

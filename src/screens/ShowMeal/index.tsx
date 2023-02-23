@@ -5,12 +5,14 @@ import { RouteParams } from './ShowDietProps';
 import { ButtonIcon } from '@components/ButtonIcon';
 import { useState } from 'react';
 import { Modal } from '@components/Modal';
+import { Alert } from 'react-native';
+import { deleteMeal } from '@storage/diets/DeleteMeal';
 
-export const ShowDiet = () => {
+export const ShowMeal = () => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const route = useRoute();
-  const { diet } = route.params as RouteParams;
+  const { meal } = route.params as RouteParams;
 
   const { goBack, navigate } = useNavigation();
 
@@ -19,13 +21,22 @@ export const ShowDiet = () => {
   };
 
   const handleGoToEditDiet = () => {
-    navigate('editDiet', {
-      diet,
+    navigate('editMeal', {
+      meal,
     });
   };
 
-  const handleRemoveDiet = (diet: string) => {
-    console.log(diet);
+  const handleRemoveDiet = async () => {
+    try {
+      await deleteMeal(meal.id);
+      toggleModal();
+      Alert.alert('Refeição removida com sucesso!');
+      navigate('home');
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert('Não foi possível excluir a refeição: ', error.message);
+      }
+    }
   };
 
   const toggleModal = () => {
@@ -34,21 +45,21 @@ export const ShowDiet = () => {
 
   return (
     <Styled.Container>
-      <HeaderIcon type={diet.type === 'on' ? 'SECONDARY' : 'THIRD'} title="Refeição" onPress={handleGoBack} />
+      <HeaderIcon type={meal.type === 'PRIMARY' ? 'SECONDARY' : 'THIRD'} title="Refeição" onPress={handleGoBack} />
       <Styled.TextsContainer>
-        <Styled.Title>{diet.name}</Styled.Title>
-        <Styled.Description>{diet.description}</Styled.Description>
+        <Styled.Title>{meal.name}</Styled.Title>
+        <Styled.Description>{meal.description}</Styled.Description>
         <Styled.DateLabel>Data e hora</Styled.DateLabel>
         <Styled.DateValue>
-          {diet.date} ás {diet.hour}
+          {meal.date} ás {meal.hour}
         </Styled.DateValue>
         <Styled.Tag>
-          <Styled.Icon name="circle" type={diet.type === 'on' ? 'PRIMARY' : 'SECONDARY'} />
-          <Styled.TagText>{diet.type === 'on' ? 'dentro da dieta' : 'fora da dieta'}</Styled.TagText>
+          <Styled.Icon name="circle" type={meal.type === 'PRIMARY' ? 'PRIMARY' : 'SECONDARY'} />
+          <Styled.TagText>{meal.type === 'PRIMARY' ? 'dentro da dieta' : 'fora da dieta'}</Styled.TagText>
         </Styled.Tag>
       </Styled.TextsContainer>
       <Styled.SubmitButtonsContainer>
-        <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
+        <Modal isVisible={isModalVisible} toggleModal={toggleModal} onPress={handleRemoveDiet} />
         <ButtonIcon icon="edit" title="Editar refeição" onPress={handleGoToEditDiet} />
         <ButtonIcon icon="delete" title="Excluir refeição" onPress={toggleModal} type="SECONDARY" />
       </Styled.SubmitButtonsContainer>

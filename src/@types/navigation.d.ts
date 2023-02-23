@@ -1,19 +1,24 @@
-import { DataProps } from '@screens/Home/HomeProps';
+import { StatisticsHeaderTypeStyleProps } from '@components/StatisticsHeader/StatisticsHeaderProps';
+import { MealProps } from '@storage/diets/DietStorageDTO';
 
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
       home: undefined;
-      statistics: undefined;
-      createDiet: undefined;
+      statistics: {
+        type: StatisticsHeaderTypeStyleProps;
+        title: string;
+        meals: MealProps[];
+      };
+      createMeal: undefined;
       feedback: {
         style: string;
       };
-      showDiet: {
-        diet: DataProps;
+      showMeal: {
+        meal: MealProps;
       };
-      editDiet: {
-        diet: DataProps;
+      editMeal: {
+        meal: MealProps;
       };
     }
   }

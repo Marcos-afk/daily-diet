@@ -1,5 +1,6 @@
 export interface RouteParams {
-  diet: {
+  meal: {
+    id: string;
     hour: string;
     date: string;
     name: string;

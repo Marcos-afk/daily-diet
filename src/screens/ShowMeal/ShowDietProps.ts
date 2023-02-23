@@ -1,10 +1,13 @@
+import { TypeMealStyleProps } from '@storage/diets/DietStorageDTO';
+
 export interface RouteParams {
-  diet: {
+  meal: {
+    id: string;
     hour: string;
     date: string;
     name: string;
     description: string;
-    type: string;
+    type: TypeMealStyleProps;
   };
 }
 

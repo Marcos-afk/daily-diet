@@ -1,5 +1,5 @@
 import * as Styled from './styles';
-import { TouchableWithoutFeedback, Keyboard, Platform, View } from 'react-native';
+import { TouchableWithoutFeedback, Keyboard, Platform, View, Alert } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,15 @@ import { Input } from '@components/Input';
 import { THEME } from '@theme/index';
 import { ContainerForTwoItems } from '@components/ContainerForTwoItems';
 import { InnerContainerForTwoItems } from '@components/InnerContainerForTwoItems';
+import { dateAndTimeFormatter } from '@utils/dateAndTimeFormatter';
+import { validateDate } from '@utils/validateDate';
+import { updateMeal } from '@storage/diets/UpdateMeal';
 
-export const EditDiet = () => {
+export const EditMeal = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [hour, setHour] = useState('');
 
   const [datepicker] = useState(new Date());
   const [mode, setMode] = useState<DatePickerTypeModeProps>('date');
@@ -27,9 +30,7 @@ export const EditDiet = () => {
     const currentDate = selectedDate || datepicker;
     setShow(Platform.OS === 'ios');
     const tempDate = new Date(currentDate);
-    const formattedDate = `${tempDate.getDate()}/${tempDate.getMonth() + 1}/${tempDate.getFullYear()}`;
-    const formattedTime = `${tempDate.getHours()}:${tempDate.getMinutes()}`;
-    mode === 'time' ? setTime(String(formattedTime)) : setDate(String(formattedDate));
+    mode === 'time' ? setHour(dateAndTimeFormatter(tempDate, 'TIME')) : setDate(dateAndTimeFormatter(tempDate, 'DATE'));
   };
 
   const showMode = (currentMode: string) => {
@@ -38,7 +39,7 @@ export const EditDiet = () => {
   };
 
   const route = useRoute();
-  const { diet } = route.params as RouteParams;
+  const { meal } = route.params as RouteParams;
 
   const { goBack, navigate } = useNavigation();
 
@@ -46,24 +47,46 @@ export const EditDiet = () => {
     goBack();
   };
 
-  const handleHome = () => {
-    navigate('home');
+  const handleFeedback = () => {
+    navigate('feedback', {
+      style: selectedButton,
+    });
+  };
+
+  const handleUpdateMeal = async () => {
+    if (name.trim().length === 0 || date.trim().length === 0 || hour.trim().length === 0) {
+      return Alert.alert('Campos requiridos não foram informados!');
+    }
+
+    if (!validateDate(date)) {
+      return Alert.alert('Data com o formato inválido!');
+    }
+
+    try {
+      await updateMeal({ id: meal.id, name, description, date, hour, type: selectedButton });
+      handleFeedback();
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert('Não foi possível atualizar refeição: ', error.message);
+      }
+    }
   };
 
   useEffect(() => {
-    setName(diet.name);
-    setDescription(diet.description);
-    setDate(diet.date);
-    setTime(diet.hour);
-    setSelectButton(diet.type === 'on' ? 'PRIMARY' : 'SECONDARY');
-  }, [diet]);
+    setName(meal.name);
+    setDescription(meal.description);
+    setDate(meal.date);
+    setHour(meal.hour);
+    setSelectButton(meal.type === 'PRIMARY' ? 'PRIMARY' : 'SECONDARY');
+  }, [meal]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Styled.Container>
         <HeaderIcon type="PRIMARY" title="Editar refeição" onPress={handleGoBack} />
         <Styled.FormContainer>
-          <Label title="Nome" />
+          <Label title="Campos requeridos *" />
+          <Label title="Nome*" />
           <Input
             value={name}
             onChangeText={setName}
@@ -86,7 +109,7 @@ export const EditDiet = () => {
 
           <ContainerForTwoItems>
             <InnerContainerForTwoItems>
-              <Label title="Data" />
+              <Label title="Data*" />
               <Input
                 onPressIn={() => showMode('date')}
                 value={date}
@@ -99,11 +122,11 @@ export const EditDiet = () => {
             <View style={{ marginLeft: 5, marginRight: 5 }} />
 
             <InnerContainerForTwoItems>
-              <Label title="Hora" />
+              <Label title="Hora*" />
               <Input
                 onPressIn={() => showMode('time')}
-                value={time}
-                onChangeText={setTime}
+                value={hour}
+                onChangeText={setHour}
                 placeholder="Clique aqui"
                 placeholderTextColor={THEME.COLORS.GRAY_400}
               />
@@ -152,7 +175,7 @@ export const EditDiet = () => {
           </ContainerForTwoItems>
         </Styled.FormContainer>
 
-        <Styled.SubmitButton onPress={handleHome}>
+        <Styled.SubmitButton onPress={handleUpdateMeal}>
           <Styled.Text>Salvar alterações</Styled.Text>
         </Styled.SubmitButton>
       </Styled.Container>

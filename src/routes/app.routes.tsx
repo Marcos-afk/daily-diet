@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { CreateDiet } from '@screens/CreateDiet';
-import { EditDiet } from '@screens/EditDiet';
+import { CreateMeal } from '@screens/CreateMeal';
+import { EditMeal } from '@screens/EditMeal';
 import { Feedback } from '@screens/Feedback';
 import { Home } from '@screens/Home';
-import { ShowDiet } from '@screens/ShowDiet';
+import { ShowMeal } from '@screens/ShowMeal';
 import { Statistics } from '@screens/Statistics';
 
 const { Navigator, Screen } = createNativeStackNavigator();
@@ -13,10 +13,10 @@ export const AppRoutes = () => {
     <Navigator screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}>
       <Screen name="home" component={Home} />
       <Screen name="statistics" component={Statistics} />
-      <Screen name="createDiet" component={CreateDiet} />
+      <Screen name="createMeal" component={CreateMeal} />
       <Screen name="feedback" component={Feedback} />
-      <Screen name="showDiet" component={ShowDiet} />
-      <Screen name="editDiet" component={EditDiet} />
+      <Screen name="showMeal" component={ShowMeal} />
+      <Screen name="editMeal" component={EditMeal} />
     </Navigator>
   );
 };
